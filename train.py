@@ -157,11 +157,7 @@ for epoch in range(EPOCH):
 
         # ------- target process -------
         tar_x = target_data[0].to(device)
-<<<<<<< HEAD
-        # tar_y = target_data[1] # None 
-=======
         # tar_y = target_data[1] # [] 
->>>>>>> b85ebe9 (init)
 
         # FeatureExtractor
         tar_feature = fe(tar_x)
