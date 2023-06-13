@@ -1,0 +1,11 @@
+# Cache
+util/__pycache__
+
+# ckpt
+checkpoints/*
+
+# test
+playground.py
+
+# env
+.env
