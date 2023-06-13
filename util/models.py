@@ -52,7 +52,7 @@ class BottleNeckBlock(nn.Module):
         out = self.stage2(out)
         out = self.stage3(out)
         residual = self.downsample(x)
-        out = out + residual
+        out = nn.functional.relu(out + residual)
         return out
 
 
@@ -93,7 +93,11 @@ class FeatureExtractor(nn.Module):
 class LabelClassifier(nn.Module):
     def __init__(self, ) -> None:
         super().__init__()
+<<<<<<< HEAD
         # [64, 1024, 7, 7]
+=======
+        # [64, 128, 7, 7]
+>>>>>>> b85ebe9 (init)
         self.fc = nn.Sequential(
             nn.Dropout(0.5),
             nn.Linear(128*7*7, 1000),

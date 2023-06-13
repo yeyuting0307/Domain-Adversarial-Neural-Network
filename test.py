@@ -78,9 +78,15 @@ fe = FeatureExtractor()
 lc = LabelClassifier()
 dc = DomainClassifier()
 
+<<<<<<< HEAD
 fe.load_state_dict(torch.load(f'./checkpoints/fe_{ckpt}_p.pth', map_location=device))
 lc.load_state_dict(torch.load(f'./checkpoints/lc_{ckpt}_p.pth', map_location=device))
 dc.load_state_dict(torch.load(f'./checkpoints/dc_{ckpt}_p.pth', map_location=device))
+=======
+fe.load_state_dict(torch.load(f'./checkpoints/fe_{ckpt}.pth', map_location=device))
+lc.load_state_dict(torch.load(f'./checkpoints/lc_{ckpt}.pth', map_location=device))
+dc.load_state_dict(torch.load(f'./checkpoints/dc_{ckpt}.pth', map_location=device))
+>>>>>>> b85ebe9 (init)
 
 fe.to(device)
 lc.to(device)
