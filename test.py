@@ -104,7 +104,7 @@ for i, source_data in enumerate(source_dataloader_test):
         src_acc += 1
     src_count += 1
 
-print(f"{src_acc} / {src_count} = {100*src_acc/src_count:.2f}%")
+print(f"[source label] {src_acc} / {src_count} = {100*src_acc/src_count:.2f}%")
 
     
 # %%
@@ -123,5 +123,5 @@ for i, target_data in enumerate(target_dataloader_test):
         tar_acc += 1
     tar_count += 1
 
-print(f"{tar_acc} / {tar_count} = {100*tar_acc/tar_count:.2f}%")
+print(f"[target label] {tar_acc} / {tar_count} = {100*tar_acc/tar_count:.2f}%")
 

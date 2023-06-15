@@ -12,7 +12,6 @@ from util.datasets import MNIST_M
 # Models
 from util.models import FeatureExtractor, LabelClassifier, DomainClassifier
 
-
 ## 1. ================= Dataset Process =================
 # DataLoader Parameters 
 BATCH = 128
@@ -122,7 +121,7 @@ optimizer = torch.optim.SGD(
 #%%
 ## 3. ================= Model Train =================
 EPOCH = 101
-device = torch.device('cpu')
+device = torch.device('mps') # cpu/cuda/mps
 
 fe.to(device)
 lc.to(device)
@@ -149,10 +148,7 @@ for epoch in range(EPOCH):
         src_label_loss = label_criterion(src_label, src_y)
 
         # DomainClassifier
-        GAMMA = 10. # from paper
-        P = (1 + epoch) / (1 + EPOCH)
-        lambda_ = 2 / (1 + np.exp(-GAMMA * P)) - 1
-        src_domain = dc(src_feature, lambda_)
+        src_domain = dc(src_feature)
         src_domain_y = torch.zeros(src_domain.size(0)).type(torch.long).to(device)
 
         # ------- target process -------
@@ -163,7 +159,7 @@ for epoch in range(EPOCH):
         tar_feature = fe(tar_x)
 
         # DomainClassifier
-        tar_domain = dc(tar_feature, lambda_)
+        tar_domain = dc(tar_feature)
         tar_domain_y = torch.ones(tar_domain.size(0)).type(torch.long).to(device)
 
         domain_loss = domain_criterion(
@@ -172,14 +168,17 @@ for epoch in range(EPOCH):
         )
 
         # ------- loss and optimizer -------
-        # from paper
+        GAMMA = 10.
+        P = (1 + epoch) / (1 + EPOCH)
+        LAMBDA = 2 / (1 + np.exp(-GAMMA * P)) - 1
+
         MU_0 = 0.01 
         ALPHA = 10 
         BETA = 0.75 
-        MU_P = MU_0 / ((1 + ALPHA * P)**BETA) 
+        MU_P = MU_0 / ((1 + ALPHA * P) ** BETA) 
         optimizer.lr = MU_P
 
-        loss = src_label_loss + domain_loss
+        loss = src_label_loss + LAMBDA * domain_loss
         loss.backward()
         optimizer.step()
 
@@ -215,7 +214,7 @@ for epoch in range(EPOCH):
             with torch.no_grad():
                 src_feature = fe(src_x)
                 src_label = lc(src_feature)
-                src_domain = dc(src_feature, 0)
+                src_domain = dc(src_feature)
                 
                 if src_label.argmax(dim=1).cpu().item() == src_y.cpu().item():
                     src_label_acc += 1
@@ -236,7 +235,7 @@ for epoch in range(EPOCH):
             with torch.no_grad():
                 tar_feature = fe(tar_x)
                 tar_label = lc(tar_feature)
-                tar_domain = dc(tar_feature, 0)
+                tar_domain = dc(tar_feature)
                 
                 if tar_label.argmax(dim=1).cpu().item() == tar_y.cpu().item():
                     tar_label_acc += 1
@@ -245,5 +244,5 @@ for epoch in range(EPOCH):
                 tar_count += 1
 
         print(f"[tar label] {tar_label_acc} / {tar_count} = {100*tar_label_acc/tar_count:.2f}%")
-        print(f"[tar domain] {tar_domain_acc} / {tar_count} = {100*tar_domain_acc/tar_count:.2f}%")
+        print(f"[tar domain] {tar_domain_acc} / {tar_count} = {100*tar_domain_acc/tar_count:.2f}%\n")
 
