@@ -8,7 +8,8 @@ Domain-Adversarial-Neural-Network
 ---
 
 ## Dataset
-- [MNIST-M Open Source](https://github.com/mashaan14/MNIST-M)
+- [MNIST](https://pytorch.org/vision/stable/generated/torchvision.datasets.MNIST.html)
+- [MNIST-M](https://github.com/mashaan14/MNIST-M)
 
 
 ---
@@ -39,10 +40,10 @@ Epoch: 100
 loss: 0.695, label_loss: 0.080, domain_loss: 0.616
 
 Test-Set Accuracy:
-[source label] 9929 / 10000 = 99.29%
-[source domain] 9408 / 10000 = 94.08%
-[target label] 8191 / 9001 = 91.00%
-[target domain] 4081 / 9001 = 45.34%
+[MNIST Label] 9929 / 10000 = 99.29%
+[MNIST Domain] 9408 / 10000 = 94.08%
+[MNIST-M Label] 8191 / 9001 = 91.00%
+[MNIST-M Domain] 4081 / 9001 = 45.34%
 ```
 
 ---
