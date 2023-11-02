@@ -1,6 +1,9 @@
 Domain-Adversarial-Neural-Network
 ===
 
+![](https://i.imgur.com/AxpyUVB.png)
+
+
 ## Paper Link
 - [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818)
 
@@ -49,10 +52,6 @@ Test-Set Accuracy:
 ---
 
 ## Reference
-
-### Model Concept
-
-![](https://i.imgur.com/AxpyUVB.png)
 
 ### Model Algorithm
 
